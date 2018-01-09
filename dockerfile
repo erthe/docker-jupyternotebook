@@ -37,7 +37,9 @@ RUN yum -y install \
            opencv \
            libpng12 \
            libXdmcp \
-           python-devel
+           python-devel \
+	   epel-release \
+	   python-pip
  
 RUN yum -y remove opencv
  
@@ -47,13 +49,29 @@ RUN wget https://repo.continuum.io/archive/Anaconda3-4.2.0-Linux-x86_64.sh && \
  
 ENV PATH $PATH:/root/anaconda3/bin
  
+# pipinstall
+RUN mkdir -p /opt/pip
+WORKDIR /opt/pip
+COPY pip_packages.txt /opt/pip/
+RUN pip install --no-cache-dir -r pip_packages.txt
+RUN pip install RISE
+
 # OpenCV install
 RUN conda install -c https://conda.anaconda.org/menpo opencv3
+RUN conda install -c Ipython
+RUN conda install -c Numpy
+RUN conda install -c pandas
+RUN conda install -c pandas-datareader
+RUN conda install -c matplotlib
+RUN conda install -c Scipy
+RUN conda install Statsmodels
  
 # make jupyter directory
 RUN mkdir /opt/jupyter/ && \
     jupyter notebook --generate-config && \
     sed -i -e "s/#c.NotebookApp.ip = 'localhost'/c.NotebookApp.ip = '*'/" /root/.jupyter/jupyter_notebook_config.py
- 
+RUN jupyter-nbextension install rise --py --sys-prefix
+RUN jupyter-nbextension enable rise --py --sys-prefix 
+
 CMD cd /opt/jupyter/ && \
-    jupyter notebook
+    jupyter notebook 
