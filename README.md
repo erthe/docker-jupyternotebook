@@ -12,7 +12,7 @@ docker pull centos
 docker build -t dev-python:1 .
 ```
 
-### make work directory
+### make work directory in same direcotry with dockerfile
 ```
 mkdir notebooks
 ```
