@@ -12,9 +12,19 @@ docker pull centos
 docker build -t dev-python:1 .
 ```
 
-### run server
+### make work directory
 ```
-docker run -d --name python -p 8888:8888 dev-python:1
+mkdir notebooks
+```
+
+### run server as first time
+```
+docker run -d --name python -v `pwd`/notebooks:/opt/jupyter -p 8888:8888 dev-python:1
+```
+
+### start server
+```
+docker start dev-python:1
 ```
 
 ### access local server

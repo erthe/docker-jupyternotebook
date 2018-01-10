@@ -49,13 +49,6 @@ RUN wget https://repo.continuum.io/archive/Anaconda3-4.2.0-Linux-x86_64.sh && \
  
 ENV PATH $PATH:/root/anaconda3/bin
  
-# pipinstall
-RUN mkdir -p /opt/pip
-WORKDIR /opt/pip
-COPY pip_packages.txt /opt/pip/
-RUN pip install --no-cache-dir -r pip_packages.txt
-RUN pip install RISE
-
 # OpenCV install
 RUN conda install -c https://conda.anaconda.org/menpo opencv3
 RUN conda install -c Ipython
