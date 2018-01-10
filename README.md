@@ -24,7 +24,12 @@ docker run -d --name python -v `pwd`/notebooks:/opt/jupyter -p 8888:8888 dev-pyt
 
 ### start server
 ```
-docker start dev-python:1
+docker start python
+```
+
+### stop server
+```
+docker stop python
 ```
 
 ### access local server
