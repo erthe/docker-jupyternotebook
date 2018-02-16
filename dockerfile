@@ -43,28 +43,29 @@ RUN yum -y install \
  
 RUN yum -y remove opencv
  
-RUN wget https://repo.continuum.io/archive/Anaconda3-4.2.0-Linux-x86_64.sh && \
-    bash Anaconda3-4.2.0-Linux-x86_64.sh -b && \
-    rm -f Anaconda3-4.2.0-Linux-x86_64.sh
+RUN wget https://repo.continuum.io/archive/Anaconda3-5.0.1-Linux-x86_64.sh && \
+    bash Anaconda3-5.0.1-Linux-x86_64.sh -b && \
+    rm -f Anaconda3-5.0.1-Linux-x86_64.sh
  
 ENV PATH $PATH:/root/anaconda3/bin
  
 # OpenCV install
 RUN conda install -c https://conda.anaconda.org/menpo opencv3
-RUN conda install -c Ipython
-RUN conda install -c Numpy
-RUN conda install -c pandas
-RUN conda install -c pandas-datareader
-RUN conda install -c matplotlib
-RUN conda install -c Scipy
-RUN conda install Statsmodels
+RUN conda install -c Ipython python=3.6
+RUN conda install -c Numpy python=3.6
+RUN conda install -c pandas python=3.6
+RUN conda install -c pandas-datareader python=3.6
+RUN conda install -c matplotlib python=3.6
+RUN conda install -c Scipy python=3.6
+RUN conda install Statsmodels python=3.6
  
 # make jupyter directory
-RUN mkdir /opt/jupyter/ && \
-    jupyter notebook --generate-config && \
-    sed -i -e "s/#c.NotebookApp.ip = 'localhost'/c.NotebookApp.ip = '*'/" /root/.jupyter/jupyter_notebook_config.py
-RUN jupyter-nbextension install rise --py --sys-prefix
-RUN jupyter-nbextension enable rise --py --sys-prefix 
+RUN mkdir /opt/jupyter/
+
+RUN pip install jupyterlab
+RUN jupyter serverextension enable --py jupyterlab
 
 CMD cd /opt/jupyter/ && \
-    jupyter notebook 
+    jupyter notebook --generate-config && \
+    sed -i -e "s/#c.NotebookApp.ip = 'localhost'/c.NotebookApp.ip = '*'/" /root/.jupyter/jupyter_notebook_config.py
+    jupyter lab

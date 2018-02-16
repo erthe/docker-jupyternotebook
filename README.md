@@ -9,7 +9,7 @@ docker pull centos
 
 ### create image
 ```
-docker build -t dev-python:1 .
+docker build -t dev-jupyterlab:1 .
 ```
 
 ### make work directory in same direcotry with dockerfile
@@ -19,18 +19,18 @@ mkdir notebooks
 
 ### run server as first time
 ```
-docker run -d --name python -v `pwd`/notebooks:/opt/jupyter -p 8888:8888 dev-python:1
+docker run -d --name jupyterlab -v `pwd`/notebooks:/opt/jupyter -p 80:8888 dev-jupyterlab:1
 ```
 
 ### start server
 ```
-docker start python
+docker start jupyterlab
 ```
 
 ### stop server
 ```
-docker stop python
+docker stop jupyterlab
 ```
 
 ### access local server
-plz access http://localhost:8888 for your browser.
+plz access http://localhost for your browser.
