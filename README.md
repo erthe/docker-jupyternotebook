@@ -7,29 +7,34 @@ docker pull centos
 
 ## how to use
 
-### create image
-```
-docker build -t dev-jupyterlab:1 .
-```
-
 ### make work directory in same direcotry with dockerfile
 ```
 mkdir notebooks
 ```
 
-### run server as first time
+### make container
 ```
-docker run -d --name jupyterlab -v `pwd`/notebooks:/opt/jupyter -p 80:8888 dev-jupyterlab:1
+docker-compose build
 ```
 
 ### start server
 ```
-docker start jupyterlab
+docker-compose up
 ```
 
-### stop server
+### get token
+when you typed the above command, get url and token like this.
+
 ```
-docker stop jupyterlab
+    Copy/paste this URL into your browser when you connect for the first time,
+    to login with a token:
+        http://localhost:8888/?token=62d7803a61480e33cc98f61b69cfcff6c4a97b0839ef9fb6
+```
+
+plz copy after '?token=' so in this case:
+
+```
+62d7803a61480e33cc98f61b69cfcff6c4a97b0839ef9fb6
 ```
 
 ### access local server

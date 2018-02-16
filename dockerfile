@@ -43,14 +43,14 @@ RUN yum -y install \
  
 RUN yum -y remove opencv
  
-RUN wget https://repo.continuum.io/archive/Anaconda3-5.0.1-Linux-x86_64.sh && \
-    bash Anaconda3-5.0.1-Linux-x86_64.sh -b && \
-    rm -f Anaconda3-5.0.1-Linux-x86_64.sh
+RUN wget https://repo.continuum.io/archive/Anaconda3-5.1.0-Linux-x86_64.sh && \
+    bash Anaconda3-5.1.0-Linux-x86_64.sh -b && \
+    rm -f Anaconda3-5.1.0-Linux-x86_64.sh
  
 ENV PATH $PATH:/root/anaconda3/bin
  
 # OpenCV install
-RUN conda install -c https://conda.anaconda.org/menpo opencv3
+RUN conda install -c https://conda.anaconda.org/menpo opencv3 python=3.6
 RUN conda install -c Ipython python=3.6
 RUN conda install -c Numpy python=3.6
 RUN conda install -c pandas python=3.6
@@ -68,4 +68,3 @@ RUN jupyter serverextension enable --py jupyterlab
 CMD cd /opt/jupyter/ && \
     jupyter notebook --generate-config && \
     sed -i -e "s/#c.NotebookApp.ip = 'localhost'/c.NotebookApp.ip = '*'/" /root/.jupyter/jupyter_notebook_config.py
-    jupyter lab
